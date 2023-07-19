@@ -33,6 +33,8 @@ class MyDB {
             const ticket = this.create(username, price);
             result.push(ticket);
         }
+
+        return result;
     }
 
 
@@ -76,6 +78,26 @@ class MyDB {
         return tickets;
     }
 
+    /**
+     * 
+     * @param {string} username 
+     * @param {{username: string, price:number}} ticketBody 
+     * @returns {Array<Ticket>}
+     */
+    updateByUsername(username, ticketBody) {
+        const tickets = this.findByUsername(username);
+        tickets.forEach((ticket) => {
+            ticket.username = ticketBody.username ?? ticket.username;
+            ticket.price = ticketBody.price ?? ticket.price;
+            ticket.updateAt = new Date();
+        });
+
+        return tickets;
+    }
+
+
+
+
 
     /**
      * 
@@ -106,8 +128,22 @@ class MyDB {
         } else {
             return false;
         }
-
     }
+
+    /**
+     * delete all tickets by username
+     * @param {string} username 
+     */
+    deleteByUsername(username) {
+        const tickets = this.findByUsername(username);
+        tickets.forEach((ticket) => {
+            this.deleteById(ticket.id);
+        });
+    }
+
+
+
+
 
 
     /**
