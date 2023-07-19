@@ -57,7 +57,7 @@ router.route('/u/:username')
 
     router.post('/bulk',(req, res)=>{
         const { username, price, quantity } = req.body;
-        const tickets = db.bulkCreated( username, price, quantity );
+        const tickets = db.bulkCreate( username, price, quantity );
         res.status(201).json( {
             message: 'Bulk Tickets created',
             tickets
